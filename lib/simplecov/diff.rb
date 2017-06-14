@@ -1,4 +1,4 @@
-require "simplecov/diff/version"
+require 'simplecov/diff/version'
 
 module Simplecov
   module Diff
