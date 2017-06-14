@@ -35,6 +35,17 @@ RSpec.describe SimpleCov::Diff::Report do
     JSON
   end
 
+  describe '.load_file' do
+    let(:tmp_file) do
+      Tempfile.open(rand(36**25).to_s(36)) { |f| f.tap { |b| b.write(test_json) } }
+    end
+
+    it 'opens a file from a path, parses the contents, and passes the data into the initializer' do
+      expect(described_class).to receive(:new).with(test_data)
+      described_class.load_file(tmp_file.path)
+    end
+  end
+
   describe '.load' do
     it 'parses a string and passes the data to the inializer' do
       expect(described_class).to receive(:new).with(test_data)

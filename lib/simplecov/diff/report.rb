@@ -3,6 +3,10 @@ require 'multi_json'
 module SimpleCov
   module Diff
     class Report
+      def self.load_file(filename)
+        ::File.open(filename, 'r:bom|utf-8') { |str| load(str) }
+      end
+
       def self.load(json)
         new MultiJson.load(json)
       end
