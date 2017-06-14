@@ -42,7 +42,14 @@ RSpec.describe SimpleCov::Diff::Report do # rubocop:disable Metrics/BlockLength
   describe '#files' do
     it 'returns a list of objects' do
       expect(subject.files.length).to eq 1
-      expect(subject.files.first[:filename]).to eq '/home/user/rails/environment.rb'
+      subject.files.first.tap do |file|
+        expect(file.filename).to eq '/home/user/rails/environment.rb'
+        expect(file.covered_percent).to eq 50.0
+        expect(file.coverage).to eq [nil, 1, nil, nil, 1]
+        expect(file.covered_strength).to eq 0.50
+        expect(file.covered_lines).to eq 2
+        expect(file.lines_of_code).to eq 4
+      end
     end
   end
 
