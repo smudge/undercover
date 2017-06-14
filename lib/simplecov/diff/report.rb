@@ -3,8 +3,12 @@ require 'multi_json'
 module SimpleCov
   module Diff
     class Report
-      def initialize(json:)
-        self.raw = MultiJson.load(json).deep_symbolize_keys
+      def self.load(json)
+        new MultiJson.load(json)
+      end
+
+      def initialize(data)
+        self.raw = data.deep_symbolize_keys
       end
 
       def timestamp

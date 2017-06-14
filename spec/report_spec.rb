@@ -1,9 +1,11 @@
 require 'spec_helper'
 require 'time'
 
-RSpec.describe SimpleCov::Diff::Report do # rubocop:disable Metrics/BlockLength
-  subject do
-    described_class.new json: <<~JSON
+# rubocop:disable Metrics/BlockLength
+RSpec.describe SimpleCov::Diff::Report do
+  let(:test_data) { MultiJson.load(test_json) }
+  let(:test_json) do
+    <<~JSON
       {
           "timestamp": 1348489587,
           "command_name": "RSpec",
@@ -33,47 +35,60 @@ RSpec.describe SimpleCov::Diff::Report do # rubocop:disable Metrics/BlockLength
     JSON
   end
 
-  describe '#timestamp' do
-    it 'returns the correct time' do
-      expect(subject.timestamp).to eq Time.parse('Monday, 24-Sep-12 12:26:27 UTC')
+  describe '.load' do
+    it 'parses a string and passes the data to the inializer' do
+      expect(described_class).to receive(:new).with(test_data)
+      described_class.load(test_json)
     end
   end
 
-  describe '#files' do
-    it 'returns a list of objects' do
-      expect(subject.files.length).to eq 1
-      subject.files.first.tap do |file|
-        expect(file.filename).to eq '/home/user/rails/environment.rb'
-        expect(file.covered_percent).to eq 50.0
-        expect(file.coverage).to eq [nil, 1, nil, nil, 1]
-        expect(file.covered_strength).to eq 0.50
-        expect(file.covered_lines).to eq 2
-        expect(file.lines_of_code).to eq 4
+  describe 'instance methods' do
+    subject do
+      described_class.new test_data
+    end
+
+    describe '#timestamp' do
+      it 'returns the correct time' do
+        expect(subject.timestamp).to eq Time.parse('Monday, 24-Sep-12 12:26:27 UTC')
       end
     end
-  end
 
-  describe '#covered_percent' do
-    it 'returns the correct decimal value' do
-      expect(subject.covered_percent).to eq 81.70731707317073
+    describe '#files' do
+      it 'returns a list of objects' do
+        expect(subject.files.length).to eq 1
+        subject.files.first.tap do |file|
+          expect(file.filename).to eq '/home/user/rails/environment.rb'
+          expect(file.covered_percent).to eq 50.0
+          expect(file.coverage).to eq [nil, 1, nil, nil, 1]
+          expect(file.covered_strength).to eq 0.50
+          expect(file.covered_lines).to eq 2
+          expect(file.lines_of_code).to eq 4
+        end
+      end
     end
-  end
 
-  describe '#covered_strength' do
-    it 'returns the correct decimal value' do
-      expect(subject.covered_strength).to eq 0.8170731707317073
+    describe '#covered_percent' do
+      it 'returns the correct decimal value' do
+        expect(subject.covered_percent).to eq 81.70731707317073
+      end
     end
-  end
 
-  describe '#covered_lines' do
-    it 'returns the correct integer value' do
-      expect(subject.covered_lines).to eq 67
+    describe '#covered_strength' do
+      it 'returns the correct decimal value' do
+        expect(subject.covered_strength).to eq 0.8170731707317073
+      end
     end
-  end
 
-  describe '#total_lines' do
-    it 'returns the correct integer value' do
-      expect(subject.total_lines).to eq 82
+    describe '#covered_lines' do
+      it 'returns the correct integer value' do
+        expect(subject.covered_lines).to eq 67
+      end
+    end
+
+    describe '#total_lines' do
+      it 'returns the correct integer value' do
+        expect(subject.total_lines).to eq 82
+      end
     end
   end
 end
