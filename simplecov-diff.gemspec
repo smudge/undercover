@@ -6,7 +6,7 @@ require 'simplecov/diff/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'simplecov-diff'
-  spec.version       = Simplecov::Diff::VERSION
+  spec.version       = SimpleCov::Diff::VERSION
   spec.authors       = ['Nathan Griffith']
   spec.email         = ['nathan.griffith@betterment.com']
 

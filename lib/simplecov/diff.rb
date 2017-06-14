@@ -1,6 +1,6 @@
 require 'simplecov/diff/version'
 
-module Simplecov
+module SimpleCov
   module Diff
     # Your code goes here...
   end
