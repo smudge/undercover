@@ -4,14 +4,17 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'simplecov/diff/version'
 
-Gem::Specification.new do |spec|
+Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
   spec.name          = 'simplecov-diff'
   spec.version       = SimpleCov::Diff::VERSION
   spec.authors       = ['Nathan Griffith']
   spec.email         = ['nathan.griffith@betterment.com']
 
-  spec.summary       = 'TODO: Write a short summary, because Rubygems requires one.'
-  spec.description   = 'TODO: Write a longer description or delete this line.'
+  spec.summary       = 'A tool for diffing simplecov JSON reports.'
+  spec.description   = <<~EOF
+    A tool for gathering meaningful information about your PR's impact on code coverage – whether any line you added is not covered, and
+    whether any change you made caused lines of coverage to be lost elsewhere in the codebase.
+  EOF
   spec.homepage      = 'TODO: Put your gem\'s website or public repo URL here.'
   spec.license       = 'MIT'
 
