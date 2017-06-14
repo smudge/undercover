@@ -34,6 +34,9 @@ Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
     f.match(%r{^(test|spec|features)/})
   end
 
+  spec.add_dependency 'multi_json'
+  spec.add_dependency 'activesupport', '>= 4.2', '< 6'
+
   spec.add_development_dependency 'bundler', '~> 1.14'
   spec.add_development_dependency 'rake', '~> 10.0'
   spec.add_development_dependency 'rspec', '~> 3.6.0'

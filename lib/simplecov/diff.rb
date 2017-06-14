@@ -1,4 +1,5 @@
 require 'simplecov/diff/version'
+require 'simplecov/diff/report'
 
 module SimpleCov
   module Diff
