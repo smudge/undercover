@@ -10,6 +10,10 @@ module SimpleCov
         files_by_filename.values
       end
 
+      def changed_files
+        files.select(&:changed?)
+      end
+
     private
 
       def files_by_filename

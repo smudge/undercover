@@ -7,7 +7,7 @@ module SimpleCov
       end
 
       def changed?
-        left.coverage != right.coverage
+        left&.coverage != right&.coverage
       end
 
       def filename
