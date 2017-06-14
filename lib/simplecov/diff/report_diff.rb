@@ -14,9 +14,8 @@ module SimpleCov
 
       def files_by_filename
         filenames.each_with_object({}) do |name, hsh|
-          hsh[name] = OpenStruct.new filename: name,
-                                     left: left_files_by_filename[name]&.first,
-                                     right: right_files_by_filename[name]&.first
+          hsh[name] = FileDiff.new(left_files_by_filename[name]&.first,
+                                   right_files_by_filename[name]&.first)
         end
       end
 
