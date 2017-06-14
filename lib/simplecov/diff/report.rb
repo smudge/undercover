@@ -1,5 +1,4 @@
 require 'multi_json'
-require 'active_support/core_ext/hash/keys'
 
 module SimpleCov
   module Diff
@@ -13,7 +12,7 @@ module SimpleCov
       end
 
       def files
-        raw[:files]
+        raw[:files].map { |data| File.new(data) }
       end
 
       def covered_percent
