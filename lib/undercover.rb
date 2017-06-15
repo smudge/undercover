@@ -4,6 +4,7 @@ require 'undercover/report'
 require 'undercover/file'
 require 'undercover/report_diff'
 require 'undercover/file_diff'
+require 'undercover/git_diff'
 
 module Undercover
   # Your code goes here...
