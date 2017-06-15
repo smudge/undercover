@@ -46,6 +46,9 @@ RSpec.describe Undercover::GitDiff do
     expect(subject.files.length).to eq 2
 
     subject.files.first.tap do |file|
+      expect(file.old_file).to eq '.rubocop.yml'
+      expect(file.new_file).to eq '.rubocop.yml'
+
       expect(file.chunks.count).to eq 1
       file.chunks.first.tap do |chunk|
         expect(chunk.old_start).to eq 1
@@ -57,6 +60,9 @@ RSpec.describe Undercover::GitDiff do
     end
 
     subject.files.last.tap do |file|
+      expect(file.old_file).to eq 'lib/undercover/report.rb'
+      expect(file.new_file).to eq 'lib/undercover/report.rb'
+
       expect(file.chunks.count).to eq 2
       file.chunks.first.tap do |chunk|
         expect(chunk.old_start).to eq 6
@@ -72,6 +78,56 @@ RSpec.describe Undercover::GitDiff do
         expect(chunk.old_length).to eq 6
         expect(chunk.new_length).to eq 7
         expect(chunk.lines).to eq [[23, 19], [24, 20], [nil, 21], [25, 22], [26, 23]]
+      end
+    end
+  end
+
+  context 'with a renamed file' do
+    let(:diff_string) do
+      <<~EOF
+        diff --git a/test_file.yml b/test_file_renamed.yml
+        similarity index 100%
+        rename from test_file.yml
+        rename to test_file_renamed.yml
+        diff --git a/.rubocop.yml b/.rubocop.todo.yml
+        similarity index 96%
+        rename from .rubocop.yml
+        rename to .rubocop.todo.yml
+        index cfc4ff3..138364c 100644
+        --- a/.rubocop.yml
+        +++ b/.rubocop.todo.yml
+        @@ -1,5 +1,5 @@
+         Metrics/LineLength:
+        -  Max: 140
+        +  Max: 99
+         Style/AccessModifierIndentation:
+           EnforcedStyle: outdent
+         Style/Documentation:
+      EOF
+    end
+
+    it 'returns the expected files and chunks' do
+      expect(subject.files.length).to eq 2
+
+      subject.files.first.tap do |file|
+        expect(file.old_file).to eq 'test_file.yml'
+        expect(file.new_file).to eq 'test_file_renamed.yml'
+
+        expect(file.chunks.count).to eq 0
+      end
+
+      subject.files.last.tap do |file|
+        expect(file.old_file).to eq '.rubocop.yml'
+        expect(file.new_file).to eq '.rubocop.todo.yml'
+
+        expect(file.chunks.count).to eq 1
+        file.chunks.first.tap do |chunk|
+          expect(chunk.old_start).to eq 1
+          expect(chunk.new_start).to eq 1
+          expect(chunk.old_length).to eq 5
+          expect(chunk.new_length).to eq 5
+          expect(chunk.lines).to eq [[1, 1], [2, nil], [nil, 2], [3, 3], [4, 4], [5, 5]]
+        end
       end
     end
   end
