@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe SimpleCov::Diff::File do
+RSpec.describe Undercover::File do
   let(:test_data) do
     {
       'filename' => '/home/user/rails/environment.rb',

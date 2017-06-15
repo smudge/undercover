@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe SimpleCov::Diff::ReportDiff do
+RSpec.describe Undercover::ReportDiff do
   let(:left_report_data) do
     <<~JSON
       {
@@ -121,8 +121,8 @@ RSpec.describe SimpleCov::Diff::ReportDiff do
       }
     JSON
   end
-  let(:left_report) { SimpleCov::Diff::Report.load(left_report_data) }
-  let(:right_report) { SimpleCov::Diff::Report.load(right_report_data) }
+  let(:left_report) { Undercover::Report.load(left_report_data) }
+  let(:right_report) { Undercover::Report.load(right_report_data) }
 
   subject { described_class.new(left_report, right_report) }
 

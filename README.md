@@ -1,4 +1,4 @@
-# SimpleCov::Diff
+# Undercover
 
 Objectives:
 
@@ -10,7 +10,7 @@ Objectives:
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'simplecov-diff'
+gem 'undercover'
 ```
 
 And then execute:
@@ -19,7 +19,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install simplecov-diff
+    $ gem install undercover
 
 ## Usage
 
@@ -33,7 +33,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/simplecov-diff.
+Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/undercover.
 
 ## License
 

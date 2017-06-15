@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe SimpleCov::Diff::FileDiff do
+RSpec.describe Undercover::FileDiff do
   let(:left_file_data) do
     {
       'filename' => '/same/file/name.rb',
@@ -22,8 +22,8 @@ RSpec.describe SimpleCov::Diff::FileDiff do
       'lines_of_code' => 6
     }
   end
-  let(:left_file) { SimpleCov::Diff::File.new(left_file_data) }
-  let(:right_file) { SimpleCov::Diff::File.new(right_file_data) }
+  let(:left_file) { Undercover::File.new(left_file_data) }
+  let(:right_file) { Undercover::File.new(right_file_data) }
 
   subject { described_class.new(left_file, right_file) }
 

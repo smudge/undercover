@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in simplecov-diff.gemspec
+# Specify your gem's dependencies in undercover.gemspec
 gemspec

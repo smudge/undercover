@@ -2,11 +2,11 @@
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'simplecov/diff/version'
+require 'undercover/version'
 
 Gem::Specification.new do |spec| # rubocop:disable Metrics/BlockLength
-  spec.name          = 'simplecov-diff'
-  spec.version       = SimpleCov::Diff::VERSION
+  spec.name          = 'undercover'
+  spec.version       = Undercover::VERSION
   spec.authors       = ['Nathan Griffith']
   spec.email         = ['nathan.griffith@betterment.com']
 

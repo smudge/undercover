@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'time'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe SimpleCov::Diff::Report do
+RSpec.describe Undercover::Report do
   let(:test_data) { MultiJson.load(test_json) }
   let(:test_json) do
     <<~JSON
