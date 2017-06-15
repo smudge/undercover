@@ -10,7 +10,7 @@ module Undercover
     end
 
     def filename
-      left&.filename || right.filename
+      right&.filename || left.filename
     end
 
   private

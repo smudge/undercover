@@ -146,4 +146,28 @@ RSpec.describe Undercover::ReportDiff do
       ]
     end
   end
+
+  context 'with renamed files' do
+    let(:renamed_files) { { '/file/that/was/removed.rb' => '/file/that/was/added.rb' } }
+
+    subject { described_class.new(left_report, right_report, renamed_files) }
+
+    describe '#files' do
+      it 'obeys renamed files' do
+        expect(subject.files.map(&:filename)).to match_array [
+          '/file/that/changed.rb',
+          '/file/that/did/not/change.rb',
+          '/file/that/was/added.rb'
+        ]
+      end
+    end
+
+    describe '#changed_files' do
+      it 'obeys renamed files' do
+        expect(subject.changed_files.map(&:filename)).to match_array [
+          '/file/that/changed.rb'
+        ]
+      end
+    end
+  end
 end

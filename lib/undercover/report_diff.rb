@@ -1,8 +1,9 @@
 module Undercover
   class ReportDiff
-    def initialize(l_report, r_report)
+    def initialize(l_report, r_report, renamed_files = {})
       self.left = l_report
       self.right = r_report
+      self.renamed_files = renamed_files
     end
 
     def files
@@ -15,6 +16,8 @@ module Undercover
 
   private
 
+    attr_accessor :left, :right, :renamed_files
+
     def files_by_filename
       filenames.each_with_object({}) do |name, hsh|
         hsh[name] = FileDiff.new(left_files_by_filename[name]&.first,
@@ -23,7 +26,7 @@ module Undercover
     end
 
     def left_files_by_filename
-      left.files.group_by(&:filename)
+      left.files.group_by { |file| renamed_files[file.filename] || file.filename }
     end
 
     def right_files_by_filename
@@ -31,9 +34,7 @@ module Undercover
     end
 
     def filenames
-      left.files.map(&:filename) | right.files.map(&:filename)
+      left_files_by_filename.keys | right_files_by_filename.keys
     end
-
-    attr_accessor :left, :right
   end
 end
