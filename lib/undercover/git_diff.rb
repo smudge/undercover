@@ -8,6 +8,10 @@ module Undercover
       self.files = parse_file_diffs(string)
     end
 
+    def file_map
+      @file_map ||= files.map { |f| [f.old_file, f.new_file] }.to_h
+    end
+
   private
 
     attr_writer :files
