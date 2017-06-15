@@ -70,7 +70,7 @@ RSpec.describe SimpleCov::Diff::Report do
         subject.files.first.tap do |file|
           expect(file.filename).to eq '/home/user/rails/environment.rb'
           expect(file.covered_percent).to eq 50.0
-          expect(file.coverage).to eq [nil, 1, nil, nil, 1]
+          expect(file.coverage).to eq [nil, true, nil, nil, true]
           expect(file.covered_strength).to eq 0.50
           expect(file.covered_lines).to eq 2
           expect(file.lines_of_code).to eq 4

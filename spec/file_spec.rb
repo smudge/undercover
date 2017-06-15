@@ -32,7 +32,7 @@ RSpec.describe SimpleCov::Diff::File do
 
     describe '#coverage' do
       it 'returns the correct time' do
-        expect(subject.coverage).to eq [nil, 1, nil, nil, 1]
+        expect(subject.coverage).to eq [nil, true, nil, nil, true]
       end
     end
 

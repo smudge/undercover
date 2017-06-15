@@ -14,7 +14,7 @@ module SimpleCov
       end
 
       def coverage
-        raw[:coverage]
+        @coverage ||= raw[:coverage].map { |i| i&.positive? }
       end
 
       def covered_strength
