@@ -9,7 +9,7 @@ RSpec.describe Undercover::ReportDiff do
           "command_name": "RSpec",
           "files": [
               {
-                  "filename": "/file/that/was/removed.rb",
+                  "filename": "/project/root/file/that/was/removed.rb",
                   "covered_percent": 50.0,
                   "coverage": [
                       null,
@@ -23,7 +23,7 @@ RSpec.describe Undercover::ReportDiff do
                   "lines_of_code": 4
               },
               {
-                  "filename": "/file/that/did/not/change.rb",
+                  "filename": "/project/root/file/that/did/not/change.rb",
                   "covered_percent": 50.0,
                   "coverage": [
                       null,
@@ -37,7 +37,7 @@ RSpec.describe Undercover::ReportDiff do
                   "lines_of_code": 4
               },
               {
-                "filename": "/file/that/changed.rb",
+                "filename": "/project/root/file/that/changed.rb",
                   "covered_percent": 50.0,
                   "coverage": [
                       null,
@@ -69,7 +69,7 @@ RSpec.describe Undercover::ReportDiff do
           "command_name": "RSpec",
           "files": [
               {
-                  "filename": "/file/that/was/added.rb",
+                  "filename": "/project/root/file/that/was/added.rb",
                   "covered_percent": 50.0,
                   "coverage": [
                       null,
@@ -83,7 +83,7 @@ RSpec.describe Undercover::ReportDiff do
                   "lines_of_code": 4
               },
               {
-                "filename": "/file/that/changed.rb",
+                "filename": "/project/root/file/that/changed.rb",
                   "covered_percent": 50.0,
                   "coverage": [
                       null,
@@ -98,7 +98,7 @@ RSpec.describe Undercover::ReportDiff do
                   "lines_of_code": 5
               },
               {
-                "filename": "/file/that/did/not/change.rb",
+                "filename": "/project/root/file/that/did/not/change.rb",
                   "covered_percent": 50.0,
                   "coverage": [
                       null,
@@ -129,10 +129,10 @@ RSpec.describe Undercover::ReportDiff do
   describe '#files' do
     it 'outputs a unioned list of all files from both reports' do
       expect(subject.files.map(&:filename)).to match_array [
-        '/file/that/was/removed.rb',
-        '/file/that/changed.rb',
-        '/file/that/did/not/change.rb',
-        '/file/that/was/added.rb'
+        'file/that/was/removed.rb',
+        'file/that/changed.rb',
+        'file/that/did/not/change.rb',
+        'file/that/was/added.rb'
       ]
     end
   end
@@ -140,24 +140,24 @@ RSpec.describe Undercover::ReportDiff do
   describe '#changed_files' do
     it 'outputs a list of only the files with changed coverage' do
       expect(subject.changed_files.map(&:filename)).to match_array [
-        '/file/that/was/removed.rb',
-        '/file/that/was/added.rb',
-        '/file/that/changed.rb'
+        'file/that/was/removed.rb',
+        'file/that/was/added.rb',
+        'file/that/changed.rb'
       ]
     end
   end
 
   context 'with renamed files' do
-    let(:renamed_files) { { '/file/that/was/removed.rb' => '/file/that/was/added.rb' } }
+    let(:renamed_files) { { 'file/that/was/removed.rb' => 'file/that/was/added.rb' } }
 
     subject { described_class.new(left_report, right_report, renamed_files) }
 
     describe '#files' do
       it 'obeys renamed files' do
         expect(subject.files.map(&:filename)).to match_array [
-          '/file/that/changed.rb',
-          '/file/that/did/not/change.rb',
-          '/file/that/was/added.rb'
+          'file/that/changed.rb',
+          'file/that/did/not/change.rb',
+          'file/that/was/added.rb'
         ]
       end
     end
@@ -165,7 +165,7 @@ RSpec.describe Undercover::ReportDiff do
     describe '#changed_files' do
       it 'obeys renamed files' do
         expect(subject.changed_files.map(&:filename)).to match_array [
-          '/file/that/changed.rb'
+          'file/that/changed.rb'
         ]
       end
     end

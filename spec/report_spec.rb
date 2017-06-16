@@ -11,7 +11,7 @@ RSpec.describe Undercover::Report do
           "command_name": "RSpec",
           "files": [
               {
-                  "filename": "/home/user/rails/environment.rb",
+                  "filename": "/project/root/home/user/rails/environment.rb",
                   "covered_percent": 50.0,
                   "coverage": [
                       null,
@@ -68,7 +68,7 @@ RSpec.describe Undercover::Report do
       it 'returns a list of objects' do
         expect(subject.files.length).to eq 1
         subject.files.first.tap do |file|
-          expect(file.filename).to eq '/home/user/rails/environment.rb'
+          expect(file.filename).to eq 'home/user/rails/environment.rb'
           expect(file.covered_percent).to eq 50.0
           expect(file.coverage).to eq [nil, true, nil, nil, true]
           expect(file.covered_strength).to eq 0.50

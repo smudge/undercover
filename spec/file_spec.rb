@@ -4,7 +4,7 @@ require 'spec_helper'
 RSpec.describe Undercover::File do
   let(:test_data) do
     {
-      'filename' => '/home/user/rails/environment.rb',
+      'filename' => '/project/root/home/user/rails/environment.rb',
       'covered_percent' => 50.0,
       'coverage' => [nil, 1, nil, nil, 1],
       'covered_strength' => 0.5,
@@ -20,7 +20,7 @@ RSpec.describe Undercover::File do
 
     describe '#filename' do
       it 'returns the correct time' do
-        expect(subject.filename).to eq '/home/user/rails/environment.rb'
+        expect(subject.filename).to eq 'home/user/rails/environment.rb'
       end
     end
 

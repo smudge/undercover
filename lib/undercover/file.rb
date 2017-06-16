@@ -1,3 +1,5 @@
+require 'pathname'
+
 module Undercover
   class File
     def initialize(raw_data)
@@ -5,7 +7,7 @@ module Undercover
     end
 
     def filename
-      raw[:filename]
+      @filename ||= relative_path.to_s
     end
 
     def covered_percent
@@ -29,6 +31,15 @@ module Undercover
     end
 
   private
+
+    def relative_path
+      Pathname.new(raw[:filename]).relative_path_from(project_root)
+    end
+
+    def project_root
+      # TODO: Solve this
+      Pathname.new('/project/root')
+    end
 
     attr_accessor :raw
   end

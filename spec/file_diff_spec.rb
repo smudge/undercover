@@ -4,7 +4,7 @@ require 'spec_helper'
 RSpec.describe Undercover::FileDiff do
   let(:left_file_data) do
     {
-      'filename' => '/same/file/name.rb',
+      'filename' => '/project/root/same/file/name.rb',
       'covered_percent' => 50.0,
       'coverage' => [nil, 1, 1, nil, nil, 1],
       'covered_strength' => 0.6,
@@ -14,7 +14,7 @@ RSpec.describe Undercover::FileDiff do
   end
   let(:right_file_data) do
     {
-      'filename' => '/same/file/name.rb',
+      'filename' => '/project/root/same/file/name.rb',
       'covered_percent' => 33.333333,
       'coverage' => [nil, 1, 0, nil, nil, 1],
       'covered_strength' => 0.4,
@@ -29,7 +29,7 @@ RSpec.describe Undercover::FileDiff do
 
   describe '#filename' do
     it 'returns the correct file name' do
-      expect(subject.filename).to eq '/same/file/name.rb'
+      expect(subject.filename).to eq 'same/file/name.rb'
     end
   end
 
