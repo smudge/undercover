@@ -1,39 +1,88 @@
 # Undercover
 
-Objectives:
+Undercover is a tool for Ruby projects that will tell you two things about changes you make to code:
 
-* Know when a line of code you added/changed is not covered by tests.
-* Know when a line of code you didn't touch lost test coverage.
+1. If a line of code that you added or changed is not covered by any tests.
+2. If an existing line of code (that you _did not_ change) lost all coverage.
 
-## Installation
+To do this, it relies on `git` (to know which files/lines you changed) and `simplecov` (to understand your test coverage). This of course
+means that your project must use `git` for source control and be set up to generate `simplecov` reports (with the `simplecov-json`
+formatter).
 
-Add this line to your application's Gemfile:
+## Setting up SimpleCov
+
+Follow the steps [here](https://github.com/colszowka/simplecov#getting-started) to get started with SimpleCov, and then
+[here](https://github.com/vicentllongo/simplecov-json#usage) to install `simplecov-json` as your formatter. Keep in mind that SimpleCov can
+support multiple formatters:
 
 ```ruby
-gem 'undercover'
+SimpleCov.formatters = [
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::JSONFormatter,
+  SimpleCov::Formatter::RcovFormatter
+]
 ```
 
-And then execute:
+It is **strongly recommended** that your coverage reports be all-or-nothing, i.e. you only generate coverage reports when you run the entire
+test suite at once. (Otherwise Undercover will be left with partial data.) The simplest way to guarantee this is to enable coverage reports
+only when an environment variable is present:
 
-    $ bundle
+```ruby
+# spec_helper.rb
+SimpleCov.start if ENV["COVERAGE"]
+```
 
-Or install it yourself as:
+This will allow you to control when you run coverage reports:
 
-    $ gem install undercover
+```bash
+COVERAGE=true rake spec
+```
 
-## Usage
+While this approach works best in a CI/build environment, there is nothing stopping you from running coverage reports locally if you are
+diligent. ;-)
 
-TODO: Write usage instructions here
+## Setting up Undercover
 
-## Development
+Add `undercover` to your application's Gemfile in the `:test` group:
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```ruby
+gem 'undercover', group: :test
+# Don't forget to run `bundle`
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+Then set up your `Rakefile` to run Undercover tasks as part of your `:default` rake task. For example:
+
+```ruby
+require 'rake/testtask'
+require 'undercover/rake_task'
+
+Rake::TestTask.new { |t| t.test_files = FileList['test/**/*_test.rb'] }
+Undercover::RakeTask.new
+
+task default: %i(test undercover)
+```
+
+Or with `rspec`:
+
+```ruby
+require 'rspec/core/rake_task'
+require 'undercover/rake_task'
+
+RSpec::Core::RakeTask.new('spec')
+Undercover::RakeTask.new
+
+task default: %i(spec undercover)
+```
+
+Now you can run your full suite and coverage reports in a single command:
+
+```bash
+COVERAGE=true rake
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/undercover.
+Bug reports and pull requests are welcome on GitHub at https://github.com/smudge/undercover.
 
 ## License
 
