@@ -80,6 +80,17 @@ Now you can run your full suite and coverage reports in a single command:
 COVERAGE=true rake
 ```
 
+## Configuration
+
+By default, Undercover assumes that your base branch is the `master` branch, and will automatically calculate changesets based on when you
+diverged from `master`. This can be customized:
+
+```ruby
+Undercover.base_branches = %w(master stage)
+```
+
+When multiple branches are specified, Undercover will attempt to pinpoint which branch you diverged from most recently.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/smudge/undercover.
