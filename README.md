@@ -1,3 +1,9 @@
+# Warning: This tool does not work.
+
+I never got around to finishing it. 😅
+
+For a similar tool that _does_ work, check out https://github.com/grodowski/undercover
+
 # Undercover
 
 Undercover is a tool for Ruby projects that will tell you two things about changes you make to code:
